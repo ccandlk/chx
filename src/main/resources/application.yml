@@ -1,0 +1,22 @@
+# Server settings  
+server:  
+    port: 8080
+    address: 127.0.0.1
+    
+# SPRING PROFILES  
+spring:         
+    # HTTP ENCODING  
+    http:  
+        encoding.charset: UTF-8  
+        encoding.enable: true  
+        encoding.force: true  
+    view:
+        prefix: /WEB-INF/pages/
+        suffix: .html
+
+    # DATASOURCE  
+    datasource:  
+        driverClass: com.mysql.jdbc.Driver  
+        url: jdbc:mysql://localhost:33333/db_book?useUnicode=true&characterEncoding=utf-8
+        username: root  
+        password: Chx930102
