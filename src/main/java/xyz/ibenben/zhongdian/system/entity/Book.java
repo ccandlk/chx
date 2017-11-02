@@ -17,9 +17,18 @@ public class Book implements Serializable {
         this.bookId = bookId;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String bookId;
     private String bookName;
     private String bookState;
