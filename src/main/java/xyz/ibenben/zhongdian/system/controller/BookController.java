@@ -20,6 +20,7 @@ public class BookController {
 	@RequestMapping("/getBook")
 	@ResponseBody
 	public List<Book> getBookList(){
+		System.out.println("=========");
 		List<Book> books=bookService.getBookList();
 		return books;
 	}
@@ -37,9 +38,10 @@ public class BookController {
 	}
 	@RequestMapping("/updateBook")
 	@ResponseBody
-	public void updateBook(String bookId,String bookName,String bookState,
+	public void updateBook(String id,String bookId,String bookName,String bookState,
 						 String uploadAuthor,String phoneNumber){
 		Book book=new Book();
+		book.setId(Integer.parseInt(id));
 		book.setBookId(bookId);
 		book.setBookName(bookName);
 		book.setBookState(bookState);

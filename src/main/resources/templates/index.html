@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>2044图书上传系统</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        * {
+            margin:0;
+            padding:0;
+        }
+        .loginForm{
+            margin:0 auto;
+            width:300px;
+            height:200px;
+            text-align: center;
+            border:1px solid lightgray;
+            margin-top:20px;
+        }
+        .header{
+            height:120px;
+        }
+        .glyphicon-user{
+
+        }
+        #username,#password{
+            margin-top:20px;
+            height:30px;
+            width:80%;
+            outline: none;
+        }
+        #password,#login,.reb{
+            margin-top:20px;
+        }
+        #login{
+            width:30%;
+            height:30px;
+            background-color: #63B8FF;
+            color:white;
+            float:right;
+            margin-right:20px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+        .errorAlert{
+            float:left;
+            margin-left:20px;
+            color:red;
+            margin-top: 20px;
+        }
+        .footer{
+            border-top: 1px solid gainsboro;
+        }
+        .pic{
+            margin:0 auto;
+            width:100px;
+            height:100px;
+            margin-top:100px;
+            border-radius: 50%;
+            overflow:hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="pic">
+    <img src="/image/2044.jpg" height="100px"/>
+</div>
+<form action="/goIn" method="get" onsubmit="return checkVaild()">
+<div class="loginForm">
+    <div class="header">
+<div class="leftLogin">
+    <span class="glyphicon glyphicon-user"></span>
+        <input type="text" id="username" name="username" placeholder="用户名" autofocus="autofocus"/>
+
+</div>
+<div class="leftLogin">
+         <span class="glyphicon glyphicon-lock"></span>
+        <input type="password" id="password" name="password" placeholder="密码"/>
+
+</div>
+</div>
+    <div class="footer">
+        <p class="errorAlert"></p>
+        <input id="login" type="submit" value="SIGN IN"/>
+    </div>
+</div>
+</form>
+<script>
+   function checkVaild(){
+       var username=$('#username').val();
+       var password=$('#password').val();
+       var ajaxFlag=true;
+       $.ajax({
+           url:'/system/user/getBooks',
+           type:'post',
+           async: false,
+           cache:false,
+           data:{'username':username,'password':password},
+           success:function(data){
+               if(data=='-1'){
+                   ajaxFlag=false;
+                   $('.errorAlert').html('用户名不存在！');
+                   var errorAlert=setInterval(function (){
+                       $('.loginForm').css({
+                           'position':'relative',
+                           'left':'6px'
+                       });
+                       setTimeout(function(){
+                           $('.loginForm').css({
+                               'position':'relative',
+                               'left':'-6px'
+                           });
+                       },100)
+                   },200);
+                   setTimeout(function(){
+                       $('.errorAlert').html('');
+                       clearInterval(errorAlert);
+                       $('#username').val('');
+                       $('#username').focus();
+                       return false;
+                   },2000)
+               }
+               else if(data=='0'){
+                   ajaxFlag=false;
+                   $('.errorAlert').html('密码错误！');
+                   var errorAlert=setInterval(function (){
+                       $('.loginForm').css({
+                           'position':'relative',
+                           'left':'6px'
+                       });
+                       setTimeout(function(){
+                           $('.loginForm').css({
+                               'position':'relative',
+                               'left':'-6px'
+                           });
+                       },100)
+                   },200);
+                   setTimeout(function(){
+                       $('.errorAlert').html('');
+                       clearInterval(errorAlert);
+                       $('#password').val('');
+                       $('#password').focus();
+                       return false;
+                   },2000)
+               }
+               else{
+
+              }
+           },
+           error:function(){
+           }
+    });
+       if(!ajaxFlag){
+           return false;
+       }
+   }
+
+</script>
+</body>
+</html>
+

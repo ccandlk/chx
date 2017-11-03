@@ -1,21 +1,16 @@
 package xyz.ibenben.zhongdian.system.dao;
 
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 import xyz.ibenben.zhongdian.common.BaseDao;
-import xyz.ibenben.zhongdian.system.entity.Book;
-import xyz.ibenben.zhongdian.system.entity.User;
-
-import java.util.List;
+import xyz.ibenben.zhongdian.system.entity.SysUser;
 
 
-public interface UserDao extends BaseDao<User>{
+public interface UserDao extends BaseDao<SysUser>{
 
     @Select("select * from users where username=#{username}")
-    public List<User> getUserName(User user);
+    public SysUser getUserName(String username);
 
     @Select("select * from users where username=#{username} and password=#{password}")
-    public List<User> getUser(User user);
+    public SysUser getUser(SysUser user);
 
 }

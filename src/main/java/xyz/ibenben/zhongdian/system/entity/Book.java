@@ -25,9 +25,6 @@ public class Book implements Serializable {
         this.id = id;
     }
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String bookId;
     private String bookName;

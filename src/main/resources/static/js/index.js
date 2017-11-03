@@ -12,19 +12,26 @@ var head=" <tr>\n" +
     "        <td align=\"center\">删除</td>\n" +
     "    </tr>";
 $('.uploadTable').append(head);
-$.ajax({
+getBooks();
+
+$(document).on('click','.pages li',function(){
+    $('.pages li').css('background-color','white');
+    $('.pages li').css('color','black');
+    $(this).css('background-color','dodgerblue');
+    $(this).css('color','white');
+    var pageTotal='';
+    var index=$(this).index();
+    var length=10*(index+1);
+    $.ajax({
     url:'/system/book/getBook',
     type:'get',
     dataType: "json", // 返回JSON格式的数据
     success:function(data){
-        console.log(data);
-        var pagesNum=Math.ceil(data.length/10);
-        books=data;
-        var trTotal='',liTotal='',length=10;
-        if(books.length<10){
+        books = data;
+        if(books.length<10*(index+1)){
             length=books.length;
         }
-        for(var i=0;i<length;i++){
+        for(var i=index*10;i<length;i++){
             var tr="<tr>" +"<td align='center'><input type='checkbox'></td>"+
                 "<td align='center'>"+i+"</td>"+
                 "<td align='center'>"+books[i].bookId+"</td>"+
@@ -34,47 +41,18 @@ $.ajax({
                 "<td align='center'>"+books[i].phoneNumber+"</td>"+
                 "<td align='center' class='edit'>编辑</td>" +
                 "<td align='center' class='remove'>删除</td></tr>";
-            trTotal+=tr;
+            pageTotal+=tr;
         }
-        $('.uploadTable').append(trTotal);
-        for(var j=1;j<pagesNum+1;j++){
-            var li='<li>'+j+'</li>';
-            liTotal+=li;
-        }
-        $('.pages').append(liTotal);
+        $('.uploadTable').html('');
+        $('.uploadTable').append(head);
+        $('.uploadTable').append(pageTotal);
     },
     error:function(){
         console.log('lkijiji');
     }
 });
-$('.pages').on('click','li',function(){
-    $('.pages li').css('background-color','white');
-    $('.pages li').css('color','black');
-    $(this).css('background-color','dodgerblue');
-    $(this).css('color','white');
-    var pageTotal='';
-    var index=$(this).index();
-    var length=10*(index+1);
-    if(books.length<10*(index+1)){
-        length=books.length;
-    }
-    for(var i=index*10;i<length;i++){
-        var tr="<tr>" +"<td align='center'><input type='checkbox'></td>"+
-            "<td align='center'>"+i+"</td>"+
-            "<td align='center'>"+books[i].bookId+"</td>"+
-            "<td align='center'>"+books[i].bookName+"</td>"+
-            "<td align='center'>"+books[i].bookState+"</td>"+
-            "<td align='center'>"+books[i].uploadAuthor+"</td>"+
-            "<td align='center'>"+books[i].phoneNumber+"</td>"+
-            "<td align='center' class='edit'>编辑</td>" +
-            "<td align='center' class='remove'>删除</td></tr>";
-        pageTotal+=tr;
-    }
-    $('.uploadTable').html('');
-    $('.uploadTable').append(head);
-    $('.uploadTable').append(pageTotal);
 });
-$('.add').click(function(){
+$(document).on('click','.add',function(){
     var add='<div class="backgroundTable">\n' +
         '    <div class="addTable">\n' +
         '        <div class="header">编辑<span class="tips"></span></div>\n' +
@@ -132,35 +110,36 @@ $(document).on('click','.addSure',function(){
                 $(".tips").css('color','red');
                 setTimeout(function(){
                     $('.backgroundTable').remove();
+                    var addTr="<tr>" +"<td align='center'><input type='checkbox'></td>"+
+                        "<td align='center'>"+$(".uploadTable tr").length+"</td>"+
+                        "<td align='center'>"+$('#bookId').val()+"</td>"+
+                        "<td align='center'>"+$('#bookName').val()+"</td>"+
+                        "<td align='center'>"+'1本'+"</td>"+
+                        "<td align='center'>"+$('#uploadAuthor').val()+"</td>"+
+                        "<td align='center'>"+$('#phoneNumber').val()+"</td>"+
+                        "<td align='center' class='edit'>编辑</td>" +
+                        "<td align='center' class='remove'>删除</td></tr>";
+                   // $('.uploadTable').append(addTr);
+                    $('.backgroundTable').remove();
+                    $('#bookId').val('');$('#bookName').val('');
+                    $('#uploadAuthor').val('');$('#phoneNumber').val('');
                 },2000)
             },
             error:function(){
                 console.log('lkijiji');
             }
         });
-        var addTr="<tr>" +"<td align='center'><input type='checkbox'></td>"+
-            "<td align='center'>"+$(".uploadTable tr").length+"</td>"+
-            "<td align='center'>"+$('#bookId').val()+"</td>"+
-            "<td align='center'>"+$('#bookName').val()+"</td>"+
-            "<td align='center'>"+'1本'+"</td>"+
-            "<td align='center'>"+$('#uploadAuthor').val()+"</td>"+
-            "<td align='center'>"+$('#phoneNumber').val()+"</td>"+
-            "<td align='center' class='edit'>编辑</td>" +
-            "<td align='center' class='remove'>删除</td></tr>";
-        $('.uploadTable').append(addTr);
-        $('.backgroundTable').remove();
-        $('#bookId').val('');$('#bookName').val('');
-        $('#uploadAuthor').val('');$('#phoneNumber').val('');
+
     }
 
 });
 $(document).on('click','.remove',function(){
     $(this).parent().remove();
 });
-$('.uploadTable').on('click','.edit',function(){
+var editIndex;
+$(document).on('click','.edit',function(){
     editContent=$(this).parent();
-    console.log($(this));
-    console.log($(this).index());
+    editIndex=$(this).parent().index();
     var edit="<div class='backgroundTables'>\n" +
         "    <div class='addTables'>\n" +
         "        <div class=\"header\">编辑<span class=\"tips\"></span></div>\n" +
@@ -200,7 +179,6 @@ $(document).on('click','.editCancles',function(){
     $('.backgroundTables').remove();
 });
 $(document).on('click','.editSures',function(){
-    console.log($(this).parent().parent().prev().find($('#bookId'))[0].value);
     var bookId=$(this).parent().parent().prev().find($('#bookId'))[0].value;
     var bookName=$(this).parent().parent().prev().find($('#bookName'))[0].value;
     var bookState=$(this).parent().parent().prev().find($('#bookState'))[0].value;
@@ -209,23 +187,66 @@ $(document).on('click','.editSures',function(){
     $.ajax({
         url:'/system/book/updateBook',
         type:'get',
-        data:{'bookId':$('#bookId').val(),'bookName':$('#bookName').val(),
+        data:{'id':editIndex,'bookId':$('#bookId').val(),'bookName':$('#bookName').val(),
             'bookState':$('#bookState').val(),'uploadAuthor':$('#uploadAuthor').val(),
             'phoneNumber':$('#phoneNumber').val()
         },
         success:function(){
             $(".tips").html('编辑成功！！');
             $(".tips").css('color','red');
-            console.log($(".tips"));
             setTimeout(function(){
                 $('.backgroundTables').remove();
+                var selectId=$('.uploadTable').find('tr:eq('+editIndex+')');
+                selectId.find('td:eq(2)').html(bookId);
+                selectId.find('td:eq(3)').html(bookName);
+                selectId.find('td:eq(4)').html(bookState);
+                selectId.find('td:eq(5)').html(uploadAuthor);
+                selectId.find('td:eq(6)').html(phoneNumber);
             },2000);
+        },
+        error:function(){
+
+        }
+    });
+
+});
+
+
+function getBooks(){
+    $.ajax({
+        url:'/system/book/getBook',
+        type:'get',
+        dataType: "json", // 返回JSON格式的数据
+        success:function(data){
+            console.log(data);
+            var pagesNum=Math.ceil(data.length/10);
+             books=data;
+            var trTotal='',liTotal='',length=10;
+            if(books.length<10){
+                length=books.length;
+            }
+            for(var i=0;i<length;i++){
+                var tr="<tr>" +"<td align='center'><input type='checkbox'></td>"+
+                    "<td align='center'>"+i+"</td>"+
+                    "<td align='center'>"+books[i].bookId+"</td>"+
+                    "<td align='center'>"+books[i].bookName+"</td>"+
+                    "<td align='center'>"+books[i].bookState+"</td>"+
+                    "<td align='center'>"+books[i].uploadAuthor+"</td>"+
+                    "<td align='center'>"+books[i].phoneNumber+"</td>"+
+                    "<td align='center' class='edit'>编辑</td>" +
+                    "<td align='center' class='remove'>删除</td></tr>";
+                trTotal+=tr;
+            }
+            $('.uploadTable').append(trTotal);
+            for(var j=1;j<pagesNum+1;j++){
+                var li='<li>'+j+'</li>';
+                liTotal+=li;
+            }
+            $('.pages').append(liTotal);
         },
         error:function(){
             console.log('lkijiji');
         }
     });
 
-//            $('.uploadTable').find('tr:eq('+')')
-
-});
+}

@@ -16,6 +16,6 @@ public interface BookDao extends BaseDao<Book>{
             "VALUES (#{bookId},#{bookName},#{bookState},#{uploadAuthor},#{phoneNumber})")
     public void saveBook(Book book);
     @Update("update books b set bookId = #{bookId},bookName= #{bookName},bookState = #{bookState}," +
-            "uploadAuthor= #{uploadAuthor},phoneNumber=#{phoneNumber} where bookId = #{bookId} ")
+            "uploadAuthor= #{uploadAuthor},phoneNumber=#{phoneNumber} where id = #{id} ")
     public void updateBook(Book book);
 }

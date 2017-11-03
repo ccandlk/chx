@@ -1,12 +1,11 @@
 package xyz.ibenben.zhongdian.system.service;
 
-import xyz.ibenben.zhongdian.system.entity.Book;
-import xyz.ibenben.zhongdian.system.entity.User;
 
-import java.util.List;
+import xyz.ibenben.zhongdian.system.entity.SysUser;
+
 
 
 public interface UserService {
-	public int getUserName(User user);
-	public String getUser(User user);
+	public int getUserName(String username);
+	public String getUser(SysUser user);
 }
