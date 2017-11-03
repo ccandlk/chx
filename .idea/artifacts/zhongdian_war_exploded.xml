@@ -29,13 +29,17 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:4.3.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.5.4" />
           <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:8.5.4" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-security/1.4.0.BUILD-SNAPSHOT/spring-boot-starter-security-1.4.0.BUILD-20160728.175440-591.jar" output-file-name="spring-boot-starter-security-1.4.0.BUILD-SNAPSHOT.jar" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:4.1.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.1.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:4.1.1.RELEASE" />
           <element id="file-copy" path="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-thymeleaf/1.4.0.BUILD-SNAPSHOT/spring-boot-starter-thymeleaf-1.4.0.BUILD-20160728.175440-590.jar" output-file-name="spring-boot-starter-thymeleaf-1.4.0.BUILD-SNAPSHOT.jar" />
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf-spring4:2.1.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf:2.1.5.RELEASE" />
